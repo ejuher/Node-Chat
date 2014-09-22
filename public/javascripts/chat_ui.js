@@ -32,9 +32,15 @@ $(document).ready(function() {
   $('form').on('submit', function (event) {
     event.preventDefault();
     var message = $('input#chat_input').val();
-    sendMessage(ourChat, message);
+ 
+    if (message.slice(0, 6) === '/nick ') {
+      var name = message.slice(6);
+      socket.emit('nicknameChangeRequest', { name: name });
+    } else {
+      sendMessage(ourChat, message);
+    }    
   })
-  
+      
   socket.on('server_message', function (data) {
     addMessage(data);
   })
