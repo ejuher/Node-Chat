@@ -18,8 +18,8 @@ var sendMessage = function (chatObject, message) {
   chatObject.sendMessage(message);
 };
 
-var addMessage = function (message) {
-  var newItem = $('<li></li>').text(message);
+var addMessage = function (data) {
+  var newItem = $('<li></li>').text(data.username + ': ' + data.text);
   $('ul').prepend(newItem);  
 };
 
@@ -36,6 +36,6 @@ $(document).ready(function() {
   })
   
   socket.on('server_message', function (data) {
-    addMessage(data.text);
+    addMessage(data);
   })
 })
