@@ -1,6 +1,11 @@
 <html>
   <head>
+    <script type="text/javascript"
+    src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/javascripts/jquery.serializejson.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/chat.js"></script>
+    <script src="/javascripts/chat_ui.js"></script>
     <script>
       var socket = io('http://localhost');
       socket.on('news', function (data) {
@@ -8,16 +13,16 @@
         socket.emit('my other event', { my: 'data' });
       });
     </script>
-      <script type="text/javascript"
-    src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      
     
   </head>
   
   
   <body>
-    <input id="chat_input" type="text" name="chat[body]"></input>
-    <button>Chat!</button>
-  
+    <form>
+      <input id="chat_input" type="text" name="chat[body]"></input>
+      <input type="submit" val="Chat!"></submit>
+    </form>  
     <ul class="messages"></ul>
   </body>
 
