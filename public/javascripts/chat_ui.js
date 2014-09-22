@@ -44,4 +44,12 @@ $(document).ready(function() {
   socket.on('server_message', function (data) {
     addMessage(data);
   })
+  
+  socket.on('nicknameChangeResult', function(data) {
+    if (data.success === true) {
+      var newItem = $('<li></li>').text(
+        data.oldName + ' has become ' + data.newName);
+      $('ul').prepend(newItem);
+    }
+  })
 })
