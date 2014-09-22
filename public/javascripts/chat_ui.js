@@ -33,6 +33,9 @@ $(document).ready(function() {
     event.preventDefault();
     var message = $('input#chat_input').val();
     sendMessage(ourChat, message);
-    addMessage(message);
+  })
+  
+  socket.on('server_message', function (data) {
+    addMessage(data.text);
   })
 })
