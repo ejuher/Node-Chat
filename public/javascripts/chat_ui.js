@@ -20,7 +20,7 @@ var sendMessage = function (chatObject, message) {
 
 var addMessage = function (data) {
   var newItem = $('<li></li>').text(data.username + ': ' + data.text);
-  $('ul').prepend(newItem);  
+  $('ul.messages').prepend(newItem);  
 };
 
 //unsure of return types
@@ -40,16 +40,43 @@ $(document).ready(function() {
       sendMessage(ourChat, message);
     }    
   })
+  
+  
+  function updateUserList (data) {
+    $('ul.all-users').empty();
+    Object.keys(data.allUsers).forEach(function (key) {
+      var $userLi = $('<li></li>').text(data.allUsers[key]);
+      $('ul.all-users').prepend($userLi);
+    })
+  }
+  
+  socket.on('nicknameChangeResult', function(data) {updateUserList(data)})
+ 
+  socket.on('logout', function(data) {updateUserList(data)})
+  
+  // socket.on('logout', function(data){
+ //    $('ul.all-users').empty();
+ //    Object.keys(data.allUsers).forEach(function (key) {
+ //      var $userLi = $('<li></li>').text(data.allUsers[key]);
+ //      $('ul.all-users').prepend($userLi);
+ //    })
+ //  })
       
   socket.on('server_message', function (data) {
     addMessage(data);
+  })
+  
+  socket.on('logout', function (data) {
+    var newItem = $('<li></li>').text(
+      data['name'] + ' has logged out');
+    $('ul.messages').prepend(newItem);
   })
   
   socket.on('nicknameChangeResult', function(data) {
     if (data.success === true) {
       var newItem = $('<li></li>').text(
         data.oldName + ' has become ' + data.newName);
-      $('ul').prepend(newItem);
+      $('ul.messages').prepend(newItem);
     }
   })
 })
