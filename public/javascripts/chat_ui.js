@@ -31,8 +31,9 @@ $(document).ready(function() {
   var ourChat = new Chat(socket);
   $('form').on('submit', function (event) {
     event.preventDefault();
+  
     var message = $('input#chat_input').val();
- 
+    $('input#chat_input').val('')
     if (message.slice(0, 6) === '/nick ') {
       var name = message.slice(6);
       socket.emit('nicknameChangeRequest', { name: name });
